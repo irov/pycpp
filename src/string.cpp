@@ -1,0 +1,17 @@
+#pragma once
+
+#include "pycpp/string.hpp"
+
+namespace pycpp
+{
+	//////////////////////////////////////////////////////////////////////////
+	void string::set_value( const char * _value )
+	{
+		m_value = _value;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	const char * string::get_value() const
+	{
+		return m_value.c_str();
+	}
+}

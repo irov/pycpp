@@ -1,8 +1,7 @@
 #pragma once
 
 #include "pycpp/factory.hpp"
-
-#include "stdex/template_pool.h"
+#include "pycpp/pool.hpp"
 
 namespace pycpp
 {
@@ -22,27 +21,27 @@ namespace pycpp
     protected:
 		pointer create_object() override
         {
-			stdex::intrusive_ptr_add_ref( this );
+			F::intrusive_ptr_add_ref( this );
 
             Type * ptr = m_pool.createT();
 
-			object->set_factory( this );
+			ptr->set_factory( this );
 
-			return object;
+			return ptr;
         }
 
-		void destroy_object( factorable * _obj ) override
+		void destroy_object( factorable * _factorable ) override
         {
-			Type * ptr = static_cast<Type*>(_obj);
+			Type * ptr = static_cast<Type*>(_factorable);
 
 			m_pool.destroyT( ptr );
 
-			stdex::intrusive_ptr_dec_ref( this );
+			F::intrusive_ptr_dec_ref( this );
         }
 
     protected:
-        typedef stdex::template_pool<Type, Count> template_pool_t;
-		template_pool_t m_pool;
+		typedef pycpp::pool<Type, Count> pool_t;
+		pool_t m_pool;
     };
     //////////////////////////////////////////////////////////////////////////
 }

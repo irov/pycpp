@@ -1,23 +1,25 @@
 #pragma once
 
-#include "stdex/intrusive_ptr.h"
-#include "stdex/intrusive_ptr_base.h"
+#include "pycpp/intrusive_ptr.hpp"
 
 #include "pycpp/none.hpp"
 #include "pycpp/string.hpp"
 #include "pycpp/integer.hpp"
 #include "pycpp/klass.hpp"
+#include "pycpp/scope.hpp"
 #include "pycpp/function.hpp"
+
+#include "pycpp/factory.hpp"
 
 #include <stdint.h>
 
 namespace pycpp
 {
 	class kernel
-		: public stdex::intrusive_ptr_base
+		: public intrusive_ptr_base
 	{
 	public:
-		void initialize();
+		bool initialize();
 		void finalize();
 
 	public:
@@ -32,10 +34,20 @@ namespace pycpp
 		pycpp::object_ptr opp_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _rigth );
 
 	public:
+		const pycpp::scope_ptr & get_global_scope() const;
+
+	public:
+		pycpp::scope_ptr make_scope( const pycpp::scope_ptr & _scope );
+
+	public:
 		const pycpp::none_ptr & ret_none() const;
 
 	protected:
+		pycpp::scope_ptr m_global_scope;
 		pycpp::none_ptr m_none;
+
+		pycpp::factory_ptr m_factory_scope;
+		pycpp::factory_ptr m_factory_string;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	typedef stdex::intrusive_ptr<kernel> kernel_ptr;

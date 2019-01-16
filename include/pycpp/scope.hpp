@@ -1,7 +1,6 @@
 #pragma once
 
-#include "stdex/intrusive_ptr.h"
-#include "stdex/intrusive_ptr_base.h"
+#include "pycpp/factorable.hpp"
 
 #include "pycpp/klass.hpp"
 #include "pycpp/string.hpp"
@@ -9,7 +8,7 @@
 namespace pycpp
 {
 	class scope
-		: public stdex::intrusive_ptr_base
+		: public pycpp::factorable
 	{
 	public:
 		void set_attr( const pycpp::string_ptr & _name, const pycpp::object_ptr & _object )
@@ -23,6 +22,6 @@ namespace pycpp
 		}
 	};
 	//////////////////////////////////////////////////////////////////////////
-	typedef stdex::intrusive_ptr<scope> scope_ptr;
+	typedef pycpp::intrusive_ptr<scope> scope_ptr;
 	//////////////////////////////////////////////////////////////////////////
 }

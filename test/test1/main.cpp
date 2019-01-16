@@ -74,4 +74,10 @@ void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr
 void main()
 {
 	pycpp::kernel_ptr kernel = pycpp::create_kernel();
+
+	const pycpp::scope_ptr & global_scope = kernel->get_global_scope();
+
+	pycpp::scope_ptr module_scope = kernel->make_scope( global_scope );
+
+	generate_class_A( kernel, module_scope );
 }

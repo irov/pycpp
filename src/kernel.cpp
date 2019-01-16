@@ -1,5 +1,6 @@
 #include "pycpp/kernel.hpp"
 #include "pycpp/factorable_unique.hpp"
+#include "pycpp/factory_pool.hpp"
 
 namespace pycpp
 {
@@ -13,9 +14,16 @@ namespace pycpp
 		return kernel;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void kernel::initialize()
+	bool kernel::initialize()
 	{
+		m_factory_scope = new pycpp::factory_pool<pycpp::scope, 256>();
+		m_factory_string = new pycpp::factory_pool<pycpp::string, 256>();
 
+		return true;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void kernel::finalize()
+	{
 	}
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::function_ptr kernel::make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _function )
@@ -35,7 +43,11 @@ namespace pycpp
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::string_ptr kernel::make_string( const char * _name )
 	{
-		return nullptr;
+		pycpp::string_ptr string = m_factory_string->create_object();
+
+		string->set_value( _name );
+
+		return string;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::list_ptr kernel::make_list( size_t _size )
@@ -49,6 +61,16 @@ namespace pycpp
 	}
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::object_ptr kernel::opp_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _rigth )
+	{
+		return nullptr;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	const pycpp::scope_ptr & kernel::get_global_scope() const
+	{
+		return m_global_scope;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	pycpp::scope_ptr kernel::make_scope( const pycpp::scope_ptr & _scope )
 	{
 		return nullptr;
 	}
