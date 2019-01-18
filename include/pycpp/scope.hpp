@@ -1,25 +1,22 @@
 #pragma once
 
-#include "pycpp/factorable.hpp"
+#include "pycpp/object.hpp"
 
-#include "pycpp/klass.hpp"
 #include "pycpp/string.hpp"
 
 namespace pycpp
 {
 	class scope
-		: public pycpp::factorable
+		: public pycpp::object
 	{
 	public:
-		void set_attr( const pycpp::string_ptr & _name, const pycpp::object_ptr & _object )
+		void set_parent( const pycpp::scope_ptr & _parent )
 		{
-
+			m_parent = _parent;
 		}
 
-		const pycpp::object_ptr & get_attr( const pycpp::string_ptr & _name ) const
-		{
-			return pycpp::object_ptr::none();
-		}
+	protected:
+		pycpp::scope_ptr m_parent;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	typedef pycpp::intrusive_ptr<scope> scope_ptr;

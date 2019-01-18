@@ -6,9 +6,15 @@
 
 namespace pycpp
 {
-	class list
+	class tuple
 		: public pycpp::object
 	{
+	public:
+		void reserve( size_t _size )
+		{
+			m_elements.reserve( _size );
+		}
+
 	public:
 		void push_back( const pycpp::object_ptr & _object )
 		{
@@ -25,6 +31,6 @@ namespace pycpp
 		vector_element_t m_elements;
 	};
 	//////////////////////////////////////////////////////////////////////////
-	typedef stdex::intrusive_ptr<list> list_ptr;
+	typedef stdex::intrusive_ptr<tuple> tuple_ptr;
 	//////////////////////////////////////////////////////////////////////////
 }
