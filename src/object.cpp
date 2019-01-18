@@ -5,7 +5,7 @@
 namespace pycpp
 {
 	//////////////////////////////////////////////////////////////////////////
-	void object::set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _object )
+	void object::set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value )
 	{
 
 	}

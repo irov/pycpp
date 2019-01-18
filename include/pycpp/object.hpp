@@ -19,7 +19,7 @@ namespace pycpp
 		: public pycpp::factorable
 	{
 	public:
-		virtual void set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _object );
+		virtual void set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value );
 		virtual const pycpp::object_ptr & get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
 		virtual void del_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key );
 		virtual bool has_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
