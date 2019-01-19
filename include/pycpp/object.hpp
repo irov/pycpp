@@ -24,11 +24,17 @@ namespace pycpp
 		virtual void del_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key );
 		virtual bool has_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
 
+    public:
+        virtual void set_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value );
+        virtual const pycpp::object_ptr & get_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
+        virtual void del_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key );
+        virtual bool has_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
+
 	public:
 		virtual uint32_t hash( const pycpp::kernel_ptr & _kernel ) const;
 
 	public:
-		virtual pycpp::object_ptr call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const lambda_call_args_provider_t & _argsProvider );
+		virtual pycpp::object_ptr call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self, const lambda_call_args_provider_t & _argsProvider );
 
 	protected:
 		type_ptr m_type;

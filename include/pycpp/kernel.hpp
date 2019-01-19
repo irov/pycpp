@@ -8,8 +8,10 @@
 #include "pycpp/real.hpp"
 #include "pycpp/string.hpp"
 #include "pycpp/klass.hpp"
+#include "pycpp/instance.hpp"
 #include "pycpp/scope.hpp"
 #include "pycpp/function.hpp"
+#include "pycpp/method.hpp"
 
 #include "pycpp/factory.hpp"
 
@@ -26,7 +28,9 @@ namespace pycpp
 
 	public:
 		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _function );
+        pycpp::method_ptr make_method( const pycpp::instance_ptr & _self, const pycpp::function_ptr & _function );
 		pycpp::klass_ptr make_klass( const pycpp::string_ptr & _name );
+        pycpp::instance_ptr make_instance( const pycpp::klass_ptr & _klass );
 		pycpp::integer_ptr make_integer( int32_t _value );
 		pycpp::real_ptr make_real( float _value );
 		pycpp::string_ptr make_string( const char * _name );
@@ -34,8 +38,8 @@ namespace pycpp
 		pycpp::dict_ptr make_dict( size_t _capacity );
 
 	public:
-		bool op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _rigth ) const;
-		pycpp::object_ptr op_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _rigth ) const;
+		bool op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const;
+		pycpp::object_ptr op_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const;
 
 	public:
 		const pycpp::scope_ptr & get_global_scope() const;
@@ -55,8 +59,11 @@ namespace pycpp
 		pycpp::factory_ptr m_factory_klass;
 		pycpp::factory_ptr m_factory_boolean;
 		pycpp::factory_ptr m_factory_integer;
+        pycpp::factory_ptr m_factory_instance;
 		pycpp::factory_ptr m_factory_real;
 		pycpp::factory_ptr m_factory_string;
+        pycpp::factory_ptr m_factory_function;
+        pycpp::factory_ptr m_factory_method;
 
 		pycpp::none_ptr m_cache_none;
 		pycpp::boolean_ptr m_cache_true;

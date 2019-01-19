@@ -13,7 +13,7 @@ namespace pycpp
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void dict::set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value )
+	void dict::set_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value )
 	{
 		uint32_t capacity = m_elements.size();
 
@@ -31,7 +31,7 @@ namespace pycpp
 		++m_size;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	const pycpp::object_ptr & dict::get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const
+	const pycpp::object_ptr & dict::get_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const
 	{
 		if( m_size == 0 )
 		{
@@ -47,7 +47,7 @@ namespace pycpp
 		return pycpp::object_ptr::none();
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void dict::del_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key )
+	void dict::del_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key )
 	{
 		if( m_size == 0 )
 		{
@@ -61,7 +61,7 @@ namespace pycpp
 		--m_size;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool dict::has_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const
+	bool dict::has_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const
 	{
 		if( m_size == 0 )
 		{

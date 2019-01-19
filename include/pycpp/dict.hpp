@@ -14,10 +14,10 @@ namespace pycpp
 		~dict() override;
 
 	public:
-		void set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value ) override;
-		const pycpp::object_ptr & get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const override;
-		void del_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) override;
-		bool has_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const override;
+		void set_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value ) override;
+		const pycpp::object_ptr & get_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const override;
+		void del_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) override;
+		bool has_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const override;
 
 	public:
 		struct element_type

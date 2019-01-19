@@ -11,8 +11,9 @@ namespace pycpp
 	class instance
 		: public pycpp::object
 	{
-	public:
-		pycpp::object_ptr call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const lambda_call_args_provider_t & _argsProvider ) override;
+    public:
+        void set_klass( const pycpp::klass_ptr & _klass );
+        const pycpp::klass_ptr & get_klass() const;
 
 	protected:
 		klass_ptr m_klass;

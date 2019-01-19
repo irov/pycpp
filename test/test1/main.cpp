@@ -32,7 +32,7 @@ void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr
 		{
 			_arguments.emplace_back( _kernel->make_string( "a" ) );
 			_arguments.emplace_back( _kernel->make_string( "b" ) );
-		}, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, pycpp::object * _self )
+		}, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
 		{
 			return _kernel->op_add( _scope->get_attr( _kernel, _kernel->make_string( "a" ) ), _scope->get_attr( _kernel, _kernel->make_string( "b" ) ) );
 		} );
@@ -51,13 +51,13 @@ void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr
 			{
 				_arguments.emplace_back( _kernel->make_string( "a" ) );
 				_arguments.emplace_back( _kernel->make_string( "b" ) );
-			}, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, pycpp::object * _self )
+			}, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
 			{
 				_self->set_attr( _kernel, _kernel->make_string( "a" ), _scope->get_attr( _kernel, _kernel->make_string( "a" ) ) );
 				_self->set_attr( _kernel, _kernel->make_string( "b" ), _scope->get_attr( _kernel, _kernel->make_string( "b" ) ) );
 				_self->set_attr( _kernel, _kernel->make_string( "c" ), _kernel->make_integer( 3 ) );
-				_self->set_attr( _kernel, _kernel->make_string( "d" ), _scope->get_attr( _kernel, _kernel->make_string( "test" ) )->call( _kernel, _scope
-					, [_self]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
+				_self->set_attr( _kernel, _kernel->make_string( "d" ), _scope->get_attr( _kernel, _kernel->make_string( "test" ) )->call( _kernel, _scope, _self
+					, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
 				{
 					_args->push_back( _scope->get_attr( _kernel, _kernel->make_string( "a" ) ) );
 					_args->push_back( _scope->get_attr( _kernel, _kernel->make_string( "b" ) ) );
@@ -66,15 +66,15 @@ void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr
 				return _kernel->get_none();
 			} );
 
-			klass_A->set_attr( _kernel, _kernel->make_string( "__init__" ), function___init__ );
+			klass_A->set_function( _kernel, _kernel->make_string( "__init__" ), function___init__ );
 		}
 
 		_scope->set_attr( _kernel, _kernel->make_string( "A" ), klass_A );
 	}
 
 	{
-		_scope->set_attr( _kernel, _kernel->make_string( "a" ), _scope->get_attr( _kernel, _kernel->make_string( "A" ) )->call( _kernel, _scope
-			, [_self]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
+		_scope->set_attr( _kernel, _kernel->make_string( "a" ), _scope->get_attr( _kernel, _kernel->make_string( "A" ) )->call( _kernel, _scope, _self
+			, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
 		{
 		} ) );
 	}

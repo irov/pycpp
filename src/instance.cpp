@@ -4,13 +4,14 @@
 
 namespace pycpp
 {
-	//////////////////////////////////////////////////////////////////////////
-	pycpp::object_ptr instance::call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const lambda_call_args_provider_t & _argsProvider )
-	{
-		const object_ptr & object_init = m_klass->get_attr( _kernel, _kernel->make_string( "__init__" ) );
-
-		pycpp::object_ptr ret = object_init->call( _kernel, _scope, _argsProvider );
-
-		return ret;
-	}
+    //////////////////////////////////////////////////////////////////////////
+    void instance::set_klass( const pycpp::klass_ptr & _klass )
+    {
+        m_klass = _klass;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::klass_ptr & instance::get_klass() const
+    {
+        return m_klass;
+    }
 }

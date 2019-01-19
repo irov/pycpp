@@ -18,10 +18,13 @@ namespace pycpp
 	{
 		m_factory_scope = new pycpp::factory_pool<pycpp::scope, 256>();
 		m_factory_klass = new pycpp::factory_pool<pycpp::klass, 256>();		
+        m_factory_instance = new pycpp::factory_pool<pycpp::instance, 256>();
 		m_factory_boolean = new pycpp::factory_pool<pycpp::boolean, 256>();
 		m_factory_integer = new pycpp::factory_pool<pycpp::integer, 256>();
 		m_factory_real = new pycpp::factory_pool<pycpp::real, 256>();
 		m_factory_string = new pycpp::factory_pool<pycpp::string, 256>();
+        m_factory_function = new pycpp::factory_pool<pycpp::function, 256>();
+        m_factory_method = new pycpp::factory_pool<pycpp::method, 256>();
 
 		m_global_scope = m_factory_scope->create_object();
 
@@ -54,7 +57,10 @@ namespace pycpp
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::function_ptr kernel::make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _function )
 	{
-		return nullptr;
+        pycpp::function_ptr function = m_factory_function->create_object();
+                
+
+		return function;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::klass_ptr kernel::make_klass( const pycpp::string_ptr & _name )
@@ -65,6 +71,15 @@ namespace pycpp
 
 		return klass;
 	}
+    //////////////////////////////////////////////////////////////////////////
+    pycpp::instance_ptr kernel::make_instance( const pycpp::klass_ptr & _klass )
+    {
+        pycpp::instance_ptr instance = m_factory_instance->create_object();
+
+        instance->set_klass( _klass );
+
+        return instance;
+    }
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::integer_ptr kernel::make_integer( int32_t _value )
 	{
@@ -117,12 +132,12 @@ namespace pycpp
 		return nullptr;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool kernel::op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _rigth ) const
+	bool kernel::op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const
 	{
 		return false;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	pycpp::object_ptr kernel::op_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _rigth ) const
+	pycpp::object_ptr kernel::op_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const
 	{
 		return nullptr;
 	}

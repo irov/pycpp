@@ -14,7 +14,7 @@ namespace pycpp
 	
 	typedef std::vector<pycpp::string_ptr> vector_attributes_t;
 	typedef std::function<void( const pycpp::kernel_ptr &, vector_attributes_t &, pycpp::string_ptr &, pycpp::string_ptr & )> lambda_func_declaration_t;
-	typedef std::function<pycpp::object_ptr( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, pycpp::object * )> lambda_call_t;
+	typedef std::function<pycpp::object_ptr( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, const pycpp::object_ptr & )> lambda_call_t;
 
 	class type
 		: public pycpp::object
@@ -29,6 +29,10 @@ namespace pycpp
 		{
 			return m_call;
 		}
+
+    public:
+        void set_attributes( const pycpp::dict_ptr & _attributes );
+        const pycpp::dict_ptr & get_attributes() const;
 
 	public:
 		void set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _object ) override;
