@@ -14,6 +14,7 @@ namespace pycpp
 	{
 	public:
 
+
 	protected:
 		pycpp::string_ptr m_name;
 		

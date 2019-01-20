@@ -18,9 +18,13 @@ namespace pycpp
 	class object
 		: public pycpp::factorable
 	{
+    public:
+        void set_type( const pycpp::type_ptr & _type );
+        const pycpp::type_ptr & get_type() const;
+
 	public:
 		virtual void set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value );
-		virtual const pycpp::object_ptr & get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
+		virtual pycpp::object_ptr get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
 		virtual void del_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key );
 		virtual bool has_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
 
@@ -32,6 +36,9 @@ namespace pycpp
 
 	public:
 		virtual uint32_t hash( const pycpp::kernel_ptr & _kernel ) const;
+
+    public:
+        virtual bool op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const;
 
 	public:
 		virtual pycpp::object_ptr call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self, const lambda_call_args_provider_t & _argsProvider );

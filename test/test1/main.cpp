@@ -24,7 +24,7 @@ class A(object):
 a = A()
 */
 
-void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, pycpp::object * _self )
+void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
 {
 	{
 		pycpp::function_ptr function_test = _kernel->make_function( _kernel->make_string( "test" )
@@ -88,5 +88,5 @@ void main()
 
 	pycpp::scope_ptr module_scope = kernel->make_scope( global_scope );
 
-	generate_class_A( kernel, module_scope, module_scope.get() );
+	generate_class_A( kernel, module_scope, module_scope );
 }

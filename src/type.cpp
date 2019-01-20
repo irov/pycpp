@@ -1,8 +1,29 @@
 #include "pycpp/type.hpp"
 #include "pycpp/dict.hpp"
+#include "pycpp/string.hpp"
 
 namespace pycpp
 {
+    //////////////////////////////////////////////////////////////////////////
+    void type::set_name( const pycpp::string_ptr & _name )
+    {
+        m_name = _name;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::string_ptr & type::get_name() const
+    {
+        return m_name;
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    //void type::set_call( const pycpp::lambda_call_t & _call )
+    //{
+    //    m_call = _call;
+    //}
+    ////////////////////////////////////////////////////////////////////////////
+    //const pycpp::lambda_call_t & type::get_call() const
+    //{
+    //    return m_call;
+    //}
     //////////////////////////////////////////////////////////////////////////
     void type::set_attributes( const pycpp::dict_ptr & _attributes )
     {
@@ -19,7 +40,7 @@ namespace pycpp
 		m_attributes->set_element( _kernel, _name, _object );
 	}
 	//////////////////////////////////////////////////////////////////////////
-	const pycpp::object_ptr & type::get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _name ) const
+	pycpp::object_ptr type::get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _name ) const
 	{
 		const pycpp::object_ptr & obj = m_attributes->get_element( _kernel, _name );
 

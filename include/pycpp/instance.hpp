@@ -15,8 +15,13 @@ namespace pycpp
         void set_klass( const pycpp::klass_ptr & _klass );
         const pycpp::klass_ptr & get_klass() const;
 
+    public:
+        pycpp::object_ptr get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const override;
+
 	protected:
-		klass_ptr m_klass;
+        pycpp::klass_ptr m_klass;
+
+        pycpp::dict_ptr m_functions;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	typedef stdex::intrusive_ptr<instance> instance_ptr;

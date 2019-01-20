@@ -12,6 +12,9 @@
 #include "pycpp/scope.hpp"
 #include "pycpp/function.hpp"
 #include "pycpp/method.hpp"
+#include "pycpp/dict.hpp"
+#include "pycpp/list.hpp"
+#include "pycpp/tuple.hpp"
 
 #include "pycpp/factory.hpp"
 
@@ -27,7 +30,8 @@ namespace pycpp
 		void finalize();
 
 	public:
-		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _function );
+        pycpp::type_ptr make_type( const pycpp::string_ptr & _name );
+		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
         pycpp::method_ptr make_method( const pycpp::instance_ptr & _self, const pycpp::function_ptr & _function );
 		pycpp::klass_ptr make_klass( const pycpp::string_ptr & _name );
         pycpp::instance_ptr make_instance( const pycpp::klass_ptr & _klass );
@@ -36,6 +40,7 @@ namespace pycpp
 		pycpp::string_ptr make_string( const char * _name );
 		pycpp::list_ptr make_list( size_t _size );
 		pycpp::dict_ptr make_dict( size_t _capacity );
+        pycpp::tuple_ptr make_tuple( size_t _capacity );
 
 	public:
 		bool op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const;
@@ -55,6 +60,7 @@ namespace pycpp
 	protected:
 		pycpp::scope_ptr m_global_scope;
 
+        pycpp::factory_ptr m_factory_type;
 		pycpp::factory_ptr m_factory_scope;
 		pycpp::factory_ptr m_factory_klass;
 		pycpp::factory_ptr m_factory_boolean;
@@ -64,10 +70,15 @@ namespace pycpp
 		pycpp::factory_ptr m_factory_string;
         pycpp::factory_ptr m_factory_function;
         pycpp::factory_ptr m_factory_method;
+        pycpp::factory_ptr m_factory_list;
+        pycpp::factory_ptr m_factory_dict;
+        pycpp::factory_ptr m_factory_tuple;
 
 		pycpp::none_ptr m_cache_none;
 		pycpp::boolean_ptr m_cache_true;
 		pycpp::boolean_ptr m_cache_false;
+
+        pycpp::tuple_ptr m_cache_tuple_empty;
 
 		pycpp::real_ptr m_cache_real_zero;
 		pycpp::real_ptr m_cache_real_one;

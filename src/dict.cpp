@@ -6,6 +6,7 @@ namespace pycpp
 {	
 	//////////////////////////////////////////////////////////////////////////
 	dict::dict()
+        : m_size( 0 )
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -43,8 +44,6 @@ namespace pycpp
 		const pycpp::object_ptr & element = this->hashtable_find( _kernel, hash, _key );
 
 		return element;
-
-		return pycpp::object_ptr::none();
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void dict::del_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key )
