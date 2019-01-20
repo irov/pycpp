@@ -29,6 +29,10 @@ namespace pycpp
 		bool initialize();
 		void finalize();
 
+    public:
+        void set_builtin_print( const pycpp::function_ptr & _function );
+        const pycpp::function_ptr & get_builtin_print() const;
+
 	public:
         pycpp::type_ptr make_type( const pycpp::string_ptr & _name );
 		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
@@ -37,7 +41,7 @@ namespace pycpp
         pycpp::instance_ptr make_instance( const pycpp::klass_ptr & _klass );
 		pycpp::integer_ptr make_integer( int32_t _value );
 		pycpp::real_ptr make_real( float _value );
-		pycpp::string_ptr make_string( const char * _name );
+		pycpp::string_ptr make_string( const std::string & _name );
 		pycpp::list_ptr make_list( size_t _size );
 		pycpp::dict_ptr make_dict( size_t _capacity );
         pycpp::tuple_ptr make_tuple( size_t _capacity );
@@ -73,6 +77,8 @@ namespace pycpp
         pycpp::factory_ptr m_factory_list;
         pycpp::factory_ptr m_factory_dict;
         pycpp::factory_ptr m_factory_tuple;
+
+        pycpp::function_ptr m_builtin_print;
 
 		pycpp::none_ptr m_cache_none;
 		pycpp::boolean_ptr m_cache_true;

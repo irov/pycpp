@@ -32,7 +32,7 @@ namespace pycpp
         virtual void set_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value );
         virtual const pycpp::object_ptr & get_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
         virtual void del_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key );
-        virtual bool has_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;
+        virtual bool has_element( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const;        
 
 	public:
 		virtual uint32_t hash( const pycpp::kernel_ptr & _kernel ) const;

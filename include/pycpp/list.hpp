@@ -10,15 +10,9 @@ namespace pycpp
 		: public pycpp::object
 	{
 	public:
-		void push_back( const pycpp::object_ptr & _object )
-		{
-			m_elements.emplace_back( _object );
-		}
-
-		const pycpp::object_ptr & get( size_t _index ) const
-		{
-			return m_elements[_index];
-		}
+        void push_back( const pycpp::object_ptr & _object );        
+        const pycpp::object_ptr & get( size_t _index ) const;
+        size_t size() const;
 
 	protected:
 		typedef std::vector<pycpp::object_ptr> vector_element_t;

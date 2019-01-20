@@ -61,6 +61,18 @@ namespace pycpp
 	{
 	}
     //////////////////////////////////////////////////////////////////////////
+    void kernel::set_builtin_print( const pycpp::function_ptr & _function )
+    {
+        m_builtin_print = _function;
+
+        m_global_scope->set_attr( this, this->make_string( "print" ), _function );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::function_ptr & kernel::get_builtin_print() const
+    {
+        return m_builtin_print;
+    }
+    //////////////////////////////////////////////////////////////////////////
     pycpp::type_ptr kernel::make_type( const pycpp::string_ptr & _name )
     {
         pycpp::type_ptr type = m_factory_type->create_object();
@@ -158,7 +170,7 @@ namespace pycpp
 		return real;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	pycpp::string_ptr kernel::make_string( const char * _name )
+	pycpp::string_ptr kernel::make_string( const std::string & _name )
 	{
 		pycpp::string_ptr string = m_factory_string->create_object();
 
