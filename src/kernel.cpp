@@ -30,7 +30,7 @@ namespace pycpp
         m_factory_list = new pycpp::factory_pool<pycpp::list, 256>();
         m_factory_tuple = new pycpp::factory_pool<pycpp::tuple, 256>();
 
-		m_global_scope = m_factory_scope->create_object();
+        m_global_scope = this->make_scope( nullptr );
 
 		m_cache_none = new factorable_unique<pycpp::none>();
 		m_cache_true = m_factory_boolean->create_object();
@@ -119,6 +119,10 @@ namespace pycpp
 
         instance->set_klass( _klass );
 
+        pycpp::dict_ptr attributes = this->make_dict( 0 );
+
+        instance->set_attributes( attributes );
+
         return instance;
     }
 	//////////////////////////////////////////////////////////////////////////
@@ -203,7 +207,14 @@ namespace pycpp
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::object_ptr kernel::op_add( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const
 	{
-		return nullptr;
+        if( _left->get_type() == _right->get_type() )
+        {
+            pycpp::object_ptr result = _left->op_add( this, _right );
+
+            return result;
+        }
+
+        return nullptr;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	const pycpp::scope_ptr & kernel::get_global_scope() const

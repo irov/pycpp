@@ -21,7 +21,7 @@ class A(object):
 		self.d = test(a, b)
 		pass
 
-a = A()
+a = A(1, 2)
 */
 
 void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
@@ -76,6 +76,8 @@ void generate_class_A( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr
 		_scope->set_attr( _kernel, _kernel->make_string( "a" ), _scope->get_attr( _kernel, _kernel->make_string( "A" ) )->call( _kernel, _scope, _self
 			, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
 		{
+            _args->push_back( _kernel->make_integer( 1 ) );
+            _args->push_back( _kernel->make_integer( 2 ) );
 		} ) );
 	}
 };

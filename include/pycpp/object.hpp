@@ -39,6 +39,7 @@ namespace pycpp
 
     public:
         virtual bool op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const;
+        virtual pycpp::object_ptr op_add( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const;
 
 	public:
 		virtual pycpp::object_ptr call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self, const lambda_call_args_provider_t & _argsProvider );

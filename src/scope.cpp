@@ -28,7 +28,19 @@ namespace pycpp
     {
         const pycpp::object_ptr & attr = m_attributes->get_element( _kernel, _key );
 
-        return attr;
+        if( attr != nullptr )
+        {
+            return attr;
+        }
+
+        if( m_parent == nullptr )
+        {
+            return nullptr;
+        }
+
+        pycpp::object_ptr parent_attr = m_parent->get_attr( _kernel, _key );
+
+        return parent_attr;
     }
     //////////////////////////////////////////////////////////////////////////
     void scope::del_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key )

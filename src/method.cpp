@@ -26,8 +26,8 @@ namespace pycpp
     //////////////////////////////////////////////////////////////////////////
     pycpp::object_ptr method::call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self, const lambda_call_args_provider_t & _argsProvider )
     {
-        //m_function->call( _kernel, _scope, _self )
+        pycpp::object_ptr result = m_function->call( _kernel, _scope, m_self, _argsProvider );
 
-        return _kernel->get_none();
+        return result;
     }
 }

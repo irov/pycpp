@@ -71,6 +71,11 @@ namespace pycpp
     {
         return false;
     }
+    //////////////////////////////////////////////////////////////////////////
+    pycpp::object_ptr object::op_add( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const
+    {
+        return nullptr;
+    }
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::object_ptr object::call( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self, const lambda_call_args_provider_t & _argsProvider )
 	{

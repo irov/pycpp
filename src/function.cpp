@@ -61,8 +61,20 @@ namespace pycpp
 
         _argsProvider( _kernel, _scope, args, kwds );
 
-        m_lambda_call( _kernel, _scope, _self );
+        pycpp::scope_ptr function_scope = _kernel->make_scope( _scope );
+
+        uint32_t attr_iterator = 0;
+        for( const pycpp::string_ptr & attr : m_attributes )
+        {
+            const pycpp::object_ptr & value = args->get( attr_iterator );
+
+            function_scope->set_attr( _kernel, attr, value );
+
+            ++attr_iterator;
+        }
+
+        pycpp::object_ptr result = m_lambda_call( _kernel, function_scope, _self );
         
-        return _kernel->get_none();
+        return result;
     }
 }
