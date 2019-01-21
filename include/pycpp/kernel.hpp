@@ -30,8 +30,8 @@ namespace pycpp
 		void finalize();
 
     public:
-        void set_builtin_print( const pycpp::function_ptr & _function );
-        const pycpp::function_ptr & get_builtin_print() const;
+        void set_builtin( const pycpp::string_ptr & _name, const pycpp::object_ptr & _builtin );
+        pycpp::object_ptr get_builtin( const pycpp::string_ptr & _name ) const;
 
 	public:
         pycpp::type_ptr make_type( const pycpp::string_ptr & _name );
@@ -77,8 +77,6 @@ namespace pycpp
         pycpp::factory_ptr m_factory_list;
         pycpp::factory_ptr m_factory_dict;
         pycpp::factory_ptr m_factory_tuple;
-
-        pycpp::function_ptr m_builtin_print;
 
 		pycpp::none_ptr m_cache_none;
 		pycpp::boolean_ptr m_cache_true;

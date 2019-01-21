@@ -61,16 +61,16 @@ namespace pycpp
 	{
 	}
     //////////////////////////////////////////////////////////////////////////
-    void kernel::set_builtin_print( const pycpp::function_ptr & _function )
+    void kernel::set_builtin( const pycpp::string_ptr & _name, const pycpp::object_ptr & _builtin )
     {
-        m_builtin_print = _function;
-
-        m_global_scope->set_attr( this, this->make_string( "print" ), _function );
+        m_global_scope->set_attr( this, _name, _builtin );
     }
     //////////////////////////////////////////////////////////////////////////
-    const pycpp::function_ptr & kernel::get_builtin_print() const
+    pycpp::object_ptr kernel::get_builtin( const pycpp::string_ptr & _name ) const
     {
-        return m_builtin_print;
+        pycpp::object_ptr builtin = m_global_scope->get_attr( this, _name );
+
+        return builtin;
     }
     //////////////////////////////////////////////////////////////////////////
     pycpp::type_ptr kernel::make_type( const pycpp::string_ptr & _name )
