@@ -8,15 +8,8 @@ namespace pycpp
 		: public pycpp::object
 	{
 	public:
-		void set_value( bool _value )
-		{
-			m_value = _value;
-		}
-
-		bool get_value() const
-		{
-			return m_value;
-		}
+        void set_value( bool _value );
+        bool get_value() const;
 
 	protected:
 		bool m_value;

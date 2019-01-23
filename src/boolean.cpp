@@ -1,0 +1,15 @@
+#include "pycpp/boolean.hpp"
+
+namespace pycpp
+{
+    //////////////////////////////////////////////////////////////////////////
+    void boolean::set_value( bool _value )
+    {
+        m_value = _value;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool boolean::get_value() const
+    {
+        return m_value;
+    }
+}

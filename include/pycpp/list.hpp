@@ -9,10 +9,16 @@ namespace pycpp
 	class list
 		: public pycpp::object
 	{
+    public:
+        void reserve( size_t _size );
+
 	public:
-        void push_back( const pycpp::object_ptr & _object );        
+        void append( const pycpp::object_ptr & _object );        
         const pycpp::object_ptr & get( size_t _index ) const;
         size_t size() const;
+
+    public:
+        pycpp::list_ptr slice( const pycpp::kernel_ptr & _kernel, size_t _offset ) const;
 
 	protected:
 		typedef std::vector<pycpp::object_ptr> vector_element_t;

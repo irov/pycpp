@@ -7,6 +7,6 @@ namespace pycpp
 {
 	using intrusive_ptr_base = stdex::intrusive_ptr_base;
 
-	template<class T>
-	using intrusive_ptr = stdex::intrusive_ptr<T>;
+	template<class T, class D = void>
+	using intrusive_ptr = stdex::intrusive_ptr<T, D>;
 }

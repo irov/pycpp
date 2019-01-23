@@ -9,7 +9,7 @@ namespace pycpp
 {
 	typedef stdex::intrusive_ptr<class kernel> kernel_ptr;
 	typedef stdex::intrusive_ptr<class dict> dict_ptr;
-	typedef stdex::intrusive_ptr<class scope> scope_ptr;
+	typedef stdex::intrusive_ptr<class scope, class object> scope_ptr;
 	typedef stdex::intrusive_ptr<class string> string_ptr;
 	
 	class type

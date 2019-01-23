@@ -15,6 +15,10 @@ namespace pycpp
         void set_value( int32_t _value );
         int32_t get_value() const;
 
+        
+    public:
+        std::string to_string( const pycpp::kernel_ptr & _kernel ) const override;
+
     protected:
         bool op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const override;
         pycpp::object_ptr op_add( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const override;

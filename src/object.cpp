@@ -9,6 +9,7 @@ namespace pycpp
     {
         m_type = _type;
     }
+    //////////////////////////////////////////////////////////////////////////
     const pycpp::type_ptr & object::get_type() const
     {
         return m_type;
@@ -66,6 +67,11 @@ namespace pycpp
 	{
 		return ~0;
 	}
+    //////////////////////////////////////////////////////////////////////////
+    std::string object::to_string( const pycpp::kernel_ptr & _kernel ) const
+    {
+        return "object";
+    }
     //////////////////////////////////////////////////////////////////////////
     bool object::op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const
     {

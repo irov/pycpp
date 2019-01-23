@@ -38,6 +38,7 @@ namespace pycpp
 		m_cache_false = m_factory_boolean->create_object();
 		m_cache_false->set_value( false );
 
+        m_cache_string_empty = m_factory_string->create_object();
         m_cache_tuple_empty = m_factory_tuple->create_object();
         
 		m_cache_real_zero = m_factory_real->create_object();
@@ -172,6 +173,11 @@ namespace pycpp
 	//////////////////////////////////////////////////////////////////////////
 	pycpp::string_ptr kernel::make_string( const std::string & _name )
 	{
+        if( _name.empty() == true )
+        {
+            return m_cache_string_empty;
+        }
+
 		pycpp::string_ptr string = m_factory_string->create_object();
 
 		string->set_value( _name );
@@ -182,6 +188,8 @@ namespace pycpp
 	pycpp::list_ptr kernel::make_list( size_t _size )
 	{
         pycpp::list_ptr list = m_factory_list->create_object();
+
+        list->reserve( _size );
 
 		return list;
 	}
@@ -261,5 +269,14 @@ namespace pycpp
 	{
 		return m_cache_false;
 	}
-
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::string_ptr & kernel::get_string_empty() const
+    {
+        return m_cache_string_empty;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::tuple_ptr & kernel::get_tuple_empty() const
+    {
+        return m_cache_tuple_empty;
+    }
 }

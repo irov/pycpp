@@ -57,9 +57,12 @@ namespace pycpp
 		pycpp::scope_ptr make_scope( const pycpp::scope_ptr & _scope );
 
 	public:
-		const pycpp::none_ptr & get_none() const;
+		const pycpp::none_ptr & get_none() const;        
 		const pycpp::boolean_ptr & get_true() const;
 		const pycpp::boolean_ptr & get_false() const;
+
+        const pycpp::string_ptr & get_string_empty() const;
+        const pycpp::tuple_ptr & get_tuple_empty() const;
 
 	protected:
 		pycpp::scope_ptr m_global_scope;
@@ -78,10 +81,11 @@ namespace pycpp
         pycpp::factory_ptr m_factory_dict;
         pycpp::factory_ptr m_factory_tuple;
 
-		pycpp::none_ptr m_cache_none;
+		pycpp::none_ptr m_cache_none;        
 		pycpp::boolean_ptr m_cache_true;
 		pycpp::boolean_ptr m_cache_false;
 
+        pycpp::string_ptr m_cache_string_empty;
         pycpp::tuple_ptr m_cache_tuple_empty;
 
 		pycpp::real_ptr m_cache_real_zero;

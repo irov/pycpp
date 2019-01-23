@@ -8,12 +8,12 @@ namespace pycpp
 {
 	typedef intrusive_ptr<class kernel> kernel_ptr;
 	typedef intrusive_ptr<class object> object_ptr;
-	typedef intrusive_ptr<class scope> scope_ptr;
+	typedef intrusive_ptr<class scope, class object> scope_ptr;
 	typedef intrusive_ptr<class type> type_ptr;
 	typedef intrusive_ptr<class list> list_ptr;
 	typedef intrusive_ptr<class dict> dict_ptr;
 	//////////////////////////////////////////////////////////////////////////
-	typedef std::function<void( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, const pycpp::list_ptr &, const pycpp::dict_ptr & )> lambda_call_args_provider_t;
+	typedef std::function<void( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, const pycpp::object_ptr &, const pycpp::list_ptr &, const pycpp::dict_ptr & )> lambda_call_args_provider_t;
 	//////////////////////////////////////////////////////////////////////////
 	class object
 		: public pycpp::factorable
@@ -36,6 +36,9 @@ namespace pycpp
 
 	public:
 		virtual uint32_t hash( const pycpp::kernel_ptr & _kernel ) const;
+
+    public:
+        virtual std::string to_string( const pycpp::kernel_ptr & _kernel ) const;
 
     public:
         virtual bool op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const;

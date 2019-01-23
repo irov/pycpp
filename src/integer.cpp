@@ -23,6 +23,11 @@ namespace pycpp
         return m_value;
     }
     //////////////////////////////////////////////////////////////////////////
+    std::string integer::to_string( const pycpp::kernel_ptr & _kernel ) const
+    {
+        return std::to_string( m_value );
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool integer::op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const
     {
         pycpp::integer * other_integer = stdex::intrusive_get<pycpp::integer *>( _other );

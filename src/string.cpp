@@ -15,6 +15,13 @@ namespace pycpp
 		return m_value;
 	}
     //////////////////////////////////////////////////////////////////////////
+    bool string::empty() const
+    {
+        bool result = m_value.empty();
+
+        return result;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool string::op_equal( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _other ) const
     {
         pycpp::string * other_string = stdex::intrusive_get<pycpp::string *>( _other );

@@ -59,7 +59,7 @@ namespace pycpp
         pycpp::list_ptr args = _kernel->make_list( 0 );
         pycpp::dict_ptr kwds = _kernel->make_dict( 0 );
 
-        _argsProvider( _kernel, _scope, args, kwds );
+        _argsProvider( _kernel, _scope, _self, args, kwds );
 
         pycpp::scope_ptr function_scope = _kernel->make_scope( _scope );
 
@@ -73,6 +73,13 @@ namespace pycpp
             ++attr_iterator;
         }
 
+        if( m_args != nullptr )
+        {
+            pycpp::list_ptr args_slice = args->slice( _kernel, attr_iterator );
+
+            function_scope->set_attr( _kernel, m_args, args_slice );
+        }
+        
         pycpp::object_ptr result = m_lambda_call( _kernel, function_scope, _self );
         
         return result;
