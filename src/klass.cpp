@@ -14,6 +14,16 @@ namespace pycpp
         return m_name;
     }
     //////////////////////////////////////////////////////////////////////////
+    void klass::set_scope( const pycpp::scope_ptr & _scope )
+    {
+        m_scope = _scope;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::scope_ptr & klass::get_scope() const
+    {
+        return m_scope;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void klass::set_functions( const pycpp::dict_ptr & _functions )
     {
         m_functions = _functions;

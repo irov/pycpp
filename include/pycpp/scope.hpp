@@ -1,7 +1,7 @@
 #pragma once
 
 #include "pycpp/object.hpp"
-
+#include "pycpp/function.hpp"
 #include "pycpp/string.hpp"
 
 namespace pycpp
@@ -16,6 +16,10 @@ namespace pycpp
     public:
         void set_attributes( const pycpp::dict_ptr & _attributes );
         const pycpp::dict_ptr & get_attributes() const;
+
+    public:
+        void make_klass( const pycpp::kernel_ptr & _kernel, const pycpp::string_ptr & _name );
+        void make_function( const pycpp::kernel_ptr & _kernel, const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
 
     public:
         void set_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::object_ptr & _value ) override;

@@ -37,7 +37,7 @@ namespace pycpp
         pycpp::type_ptr make_type( const pycpp::string_ptr & _name );
 		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
         pycpp::method_ptr make_method( const pycpp::instance_ptr & _self, const pycpp::function_ptr & _function );
-		pycpp::klass_ptr make_klass( const pycpp::string_ptr & _name );
+		pycpp::klass_ptr make_klass( const pycpp::string_ptr & _name, const pycpp::scope_ptr & _scope );
         pycpp::instance_ptr make_instance( const pycpp::klass_ptr & _klass );
 		pycpp::integer_ptr make_integer( int32_t _value );
 		pycpp::real_ptr make_real( float _value );

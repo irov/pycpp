@@ -46,4 +46,27 @@ namespace pycpp
 
         return new_list;
     }
+    //////////////////////////////////////////////////////////////////////////
+    pycpp::tuple_ptr list::slice_tuple( const pycpp::kernel_ptr & _kernel, size_t _offset ) const
+    {
+        size_t elements_size = m_elements.size();
+
+        if( _offset >= elements_size )
+        {
+            return _kernel->make_tuple( 0 );
+        }
+
+        size_t new_size = elements_size - _offset;
+
+        pycpp::tuple_ptr new_tuple = _kernel->make_tuple( new_size );
+
+        for( size_t slice_iterator = _offset; slice_iterator != elements_size; ++slice_iterator )
+        {
+            const pycpp::object_ptr & element = this->get( slice_iterator );
+
+            new_tuple->append( element );
+        }
+
+        return new_tuple;
+    }
 }

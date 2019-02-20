@@ -75,7 +75,7 @@ namespace pycpp
 
         if( m_args != nullptr )
         {
-            pycpp::list_ptr args_slice = args->slice( _kernel, attr_iterator );
+            pycpp::tuple_ptr args_slice = args->slice_tuple( _kernel, attr_iterator );
 
             function_scope->set_attr( _kernel, m_args, args_slice );
         }

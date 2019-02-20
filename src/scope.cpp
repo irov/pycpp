@@ -24,6 +24,20 @@ namespace pycpp
         return m_attributes;
     }
     //////////////////////////////////////////////////////////////////////////
+    void scope::make_klass( const pycpp::kernel_ptr & _kernel, const pycpp::string_ptr & _name )
+    {
+        pycpp::klass_ptr klass = _kernel->make_klass( _name, _scope );
+
+        _scope->set_attr( _kernel, _name, klass );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void scope::make_function( const pycpp::kernel_ptr & _kernel, const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda )
+    {
+        pycpp::function_ptr function = _kernel->make_function( _name, this, _declaration, _lambda );
+
+        _scope->set_attr( _kernel, _name, function );
+    }
+    //////////////////////////////////////////////////////////////////////////
     pycpp::object_ptr scope::get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const
     {
         const pycpp::object_ptr & attr = m_attributes->get_element( _kernel, _key );

@@ -21,6 +21,10 @@ namespace pycpp
         const pycpp::string_ptr & get_name() const;
 
     public:
+        void set_scope( const pycpp::scope_ptr & _scope );
+        const pycpp::scope_ptr & get_scope() const;
+
+    public:
         void set_functions( const pycpp::dict_ptr & _functions );
         const pycpp::dict_ptr & get_functions() const;
 
@@ -36,6 +40,8 @@ namespace pycpp
 
 	protected:
 		pycpp::string_ptr m_name;
+
+        pycpp::scope_ptr m_scope;
 
         typedef std::vector<pycpp::object_ptr> vector_base_t;
         vector_base_t m_bases;
