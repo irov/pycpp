@@ -14,6 +14,16 @@ namespace pycpp
         return m_name;
     }
     //////////////////////////////////////////////////////////////////////////
+    void function::set_scope( const pycpp::scope_ptr & _scope )
+    {
+        m_scope = _scope;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const pycpp::scope_ptr & function::get_scope() const
+    {
+        return m_scope;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void function::set_attributes( const pycpp::vector_attributes_t & _attributes )
     {
         m_attributes = _attributes;
@@ -61,14 +71,14 @@ namespace pycpp
 
         _argsProvider( _kernel, _scope, _self, args, kwds );
 
-        pycpp::scope_ptr function_scope = _kernel->make_scope( _scope );
+        pycpp::scope_ptr call_scope = _kernel->make_scope( m_scope );
 
         uint32_t attr_iterator = 0;
         for( const pycpp::string_ptr & attr : m_attributes )
         {
             const pycpp::object_ptr & value = args->get( attr_iterator );
 
-            function_scope->set_attr( _kernel, attr, value );
+            call_scope->set_attr( _kernel, attr, value );
 
             ++attr_iterator;
         }
@@ -77,10 +87,10 @@ namespace pycpp
         {
             pycpp::tuple_ptr args_slice = args->slice_tuple( _kernel, attr_iterator );
 
-            function_scope->set_attr( _kernel, m_args, args_slice );
+            call_scope->set_attr( _kernel, m_args, args_slice );
         }
         
-        pycpp::object_ptr result = m_lambda_call( _kernel, function_scope, _self );
+        pycpp::object_ptr result = m_lambda_call( _kernel, call_scope, _self );
         
         return result;
     }

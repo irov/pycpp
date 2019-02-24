@@ -14,16 +14,6 @@ namespace pycpp
         return m_name;
     }
     //////////////////////////////////////////////////////////////////////////
-    void klass::set_scope( const pycpp::scope_ptr & _scope )
-    {
-        m_scope = _scope;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    const pycpp::scope_ptr & klass::get_scope() const
-    {
-        return m_scope;
-    }
-    //////////////////////////////////////////////////////////////////////////
     void klass::set_functions( const pycpp::dict_ptr & _functions )
     {
         m_functions = _functions;
@@ -39,9 +29,16 @@ namespace pycpp
         m_bases.emplace_back( _base );
     }
     //////////////////////////////////////////////////////////////////////////
-    void klass::set_function( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::function_ptr & _function )
+    const pycpp::vector_objects_t & klass::get_bases() const
     {
-        m_functions->set_element( _kernel, _key, _function );
+        return m_bases;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void klass::make_function( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _key, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda )
+    {
+        pycpp::function_ptr function = _kernel->make_function( m_name, _scope, _declaration, _lambda );
+
+        m_functions->set_element( _kernel, _key, function );
     }
     //////////////////////////////////////////////////////////////////////////
     const pycpp::object_ptr & klass::get_function( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key )

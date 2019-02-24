@@ -15,6 +15,7 @@
 #include "pycpp/dict.hpp"
 #include "pycpp/list.hpp"
 #include "pycpp/tuple.hpp"
+#include "pycpp/module.hpp"
 
 #include "pycpp/factory.hpp"
 
@@ -22,6 +23,10 @@
 
 namespace pycpp
 {
+    typedef std::function<void( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, pycpp::klass_ptr & )> lambda_klass_basses_t;
+    typedef std::function<void( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, pycpp::klass_ptr & )> lambda_klass_attributes_t;
+    typedef std::function<void( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, pycpp::klass_ptr & )> lambda_klass_methods_t;
+
 	class kernel
 		: public intrusive_ptr_base
 	{
@@ -35,9 +40,9 @@ namespace pycpp
 
 	public:
         pycpp::type_ptr make_type( const pycpp::string_ptr & _name );
-		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
+		pycpp::function_ptr make_function( const pycpp::string_ptr & _name, const pycpp::scope_ptr & _scope, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
         pycpp::method_ptr make_method( const pycpp::instance_ptr & _self, const pycpp::function_ptr & _function );
-		pycpp::klass_ptr make_klass( const pycpp::string_ptr & _name, const pycpp::scope_ptr & _scope );
+		pycpp::klass_ptr make_klass( const pycpp::string_ptr & _name, const pycpp::scope_ptr & _scope, const lambda_klass_basses_t & _basses, const lambda_klass_attributes_t & _attributes, const lambda_klass_methods_t & _methods );
         pycpp::instance_ptr make_instance( const pycpp::klass_ptr & _klass );
 		pycpp::integer_ptr make_integer( int32_t _value );
 		pycpp::real_ptr make_real( float _value );
@@ -45,6 +50,7 @@ namespace pycpp
 		pycpp::list_ptr make_list( size_t _size );
 		pycpp::dict_ptr make_dict( size_t _capacity );
         pycpp::tuple_ptr make_tuple( size_t _capacity );
+        pycpp::module_ptr make_module( const pycpp::string_ptr & _name );
 
 	public:
 		bool op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const;
@@ -55,6 +61,9 @@ namespace pycpp
 
 	public:
 		pycpp::scope_ptr make_scope( const pycpp::scope_ptr & _scope );
+
+    public:
+        void make_builtin_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
 
 	public:
 		const pycpp::none_ptr & get_none() const;        
@@ -80,6 +89,7 @@ namespace pycpp
         pycpp::factory_ptr m_factory_list;
         pycpp::factory_ptr m_factory_dict;
         pycpp::factory_ptr m_factory_tuple;
+        pycpp::factory_ptr m_factory_module;
 
 		pycpp::none_ptr m_cache_none;        
 		pycpp::boolean_ptr m_cache_true;

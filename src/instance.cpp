@@ -32,7 +32,7 @@ namespace pycpp
     //////////////////////////////////////////////////////////////////////////
     pycpp::object_ptr instance::get_attr( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key ) const
     {
-        const pycpp::object_ptr & function = m_klass->get_function( _kernel, _key );
+        pycpp::object_ptr function = m_klass->get_function( _kernel, _key );
 
         if( function != nullptr )
         {

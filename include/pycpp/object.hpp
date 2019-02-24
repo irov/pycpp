@@ -2,6 +2,7 @@
 
 #include "pycpp/factorable.hpp"
 
+#include <vector>
 #include <functional>
 
 namespace pycpp
@@ -12,6 +13,8 @@ namespace pycpp
 	typedef intrusive_ptr<class type> type_ptr;
 	typedef intrusive_ptr<class list> list_ptr;
 	typedef intrusive_ptr<class dict> dict_ptr;
+    //////////////////////////////////////////////////////////////////////////
+    typedef std::vector<pycpp::object_ptr> vector_objects_t;
 	//////////////////////////////////////////////////////////////////////////
 	typedef std::function<void( const pycpp::kernel_ptr &, const pycpp::scope_ptr &, const pycpp::object_ptr &, const pycpp::list_ptr &, const pycpp::dict_ptr & )> lambda_call_args_provider_t;
 	//////////////////////////////////////////////////////////////////////////

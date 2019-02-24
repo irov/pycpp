@@ -29,6 +29,7 @@ namespace pycpp
         m_factory_dict = new pycpp::factory_pool<pycpp::dict, 256>();
         m_factory_list = new pycpp::factory_pool<pycpp::list, 256>();
         m_factory_tuple = new pycpp::factory_pool<pycpp::tuple, 256>();
+        m_factory_module = new pycpp::factory_pool<pycpp::module, 256>();
 
         m_global_scope = this->make_scope( nullptr );
 
@@ -83,11 +84,12 @@ namespace pycpp
         return type;
     }
 	//////////////////////////////////////////////////////////////////////////
-	pycpp::function_ptr kernel::make_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda )
+	pycpp::function_ptr kernel::make_function( const pycpp::string_ptr & _name, const pycpp::scope_ptr & _scope, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda )
 	{
         pycpp::function_ptr function = m_factory_function->create_object();
 
         function->set_name( _name );
+        function->set_scope( _scope );
 
         vector_attributes_t attributes;
         pycpp::string_ptr args;
@@ -113,15 +115,21 @@ namespace pycpp
         return method;
     }
 	//////////////////////////////////////////////////////////////////////////
-	pycpp::klass_ptr kernel::make_klass( const pycpp::string_ptr & _name )
+	pycpp::klass_ptr kernel::make_klass( const pycpp::string_ptr & _name, const pycpp::scope_ptr & _scope, const lambda_klass_basses_t & _basses, const lambda_klass_attributes_t & _attributes, const lambda_klass_methods_t & _methods )
 	{
 		pycpp::klass_ptr klass = m_factory_klass->create_object();
 
 		klass->set_name( _name );
 
-        pycpp::dict_ptr functions = this->make_dict( 0 );
+        klass->set_parent( _scope );
 
+        pycpp::dict_ptr functions = this->make_dict( 0 );
         klass->set_functions( functions );
+
+        vector_objects_t basses;
+        _basses( this, klass, klass );
+        _attributes( this, klass, klass );
+        _methods( this, klass, klass );
 
 		return klass;
 	}
@@ -212,6 +220,19 @@ namespace pycpp
 
         return tuple;
     }
+    //////////////////////////////////////////////////////////////////////////
+    pycpp::module_ptr kernel::make_module( const pycpp::string_ptr & _name )
+    {
+        pycpp::module_ptr module = m_factory_module->create_object();
+
+        module->set_name( _name );
+
+        pycpp::scope_ptr module_scope = this->make_scope( m_global_scope );
+
+        module->set_parent( module_scope );
+
+        return module;
+    }
 	//////////////////////////////////////////////////////////////////////////
 	bool kernel::op_equal( const pycpp::object_ptr & _left, const pycpp::object_ptr & _right ) const
 	{
@@ -254,6 +275,13 @@ namespace pycpp
 
 		return scope;
 	}
+    //////////////////////////////////////////////////////////////////////////
+    void kernel::make_builtin_function( const pycpp::string_ptr & _name, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda )
+    {
+        pycpp::function_ptr function = this->make_function( _name, m_global_scope, _declaration, _lambda );
+
+        m_global_scope->set_attr( this, _name, function );
+    }
 	//////////////////////////////////////////////////////////////////////////
 	const pycpp::none_ptr & kernel::get_none() const
 	{

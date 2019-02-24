@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pycpp/object.hpp"
 #include "pycpp/type.hpp"
 #include "pycpp/scope.hpp"
 #include "pycpp/list.hpp"
@@ -14,15 +13,11 @@ namespace pycpp
 	typedef stdex::intrusive_ptr<class kernel> kernel_ptr;
 
 	class klass
-		: public pycpp::object
+		: public pycpp::scope
 	{
 	public:
         void set_name( const pycpp::string_ptr & _name );
         const pycpp::string_ptr & get_name() const;
-
-    public:
-        void set_scope( const pycpp::scope_ptr & _scope );
-        const pycpp::scope_ptr & get_scope() const;
 
     public:
         void set_functions( const pycpp::dict_ptr & _functions );
@@ -30,9 +25,10 @@ namespace pycpp
 
 	public:
         void add_base( const pycpp::object_ptr & _base );
+        const pycpp::vector_objects_t & get_bases() const;
 
     public:
-        void set_function( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key, const pycpp::function_ptr & _function );
+        void make_function( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _key, const lambda_func_declaration_t & _declaration, const lambda_call_t & _lambda );
         const pycpp::object_ptr & get_function( const pycpp::kernel_ptr & _kernel, const pycpp::object_ptr & _key );
 
     protected:
@@ -40,11 +36,8 @@ namespace pycpp
 
 	protected:
 		pycpp::string_ptr m_name;
-
-        pycpp::scope_ptr m_scope;
-
-        typedef std::vector<pycpp::object_ptr> vector_base_t;
-        vector_base_t m_bases;
+                
+        pycpp::vector_objects_t m_bases;
 
         pycpp::dict_ptr m_functions;
 	};

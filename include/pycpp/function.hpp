@@ -16,6 +16,9 @@ namespace pycpp
         void set_name( const pycpp::string_ptr & _name );
         const pycpp::string_ptr & get_name() const;
 
+        void set_scope( const pycpp::scope_ptr & _scope );
+        const pycpp::scope_ptr & get_scope() const;
+
         void set_attributes( const pycpp::vector_attributes_t & _attributes );
         const pycpp::vector_attributes_t & get_attributes() const;
 
@@ -33,6 +36,7 @@ namespace pycpp
 
 	protected:
         pycpp::string_ptr m_name;
+        pycpp::scope_ptr m_scope;
         
         vector_attributes_t m_attributes;
 

@@ -14,8 +14,8 @@ namespace pycpp
 
 	public:
         void append( const pycpp::object_ptr & _object );
-
         const pycpp::object_ptr & get( size_t _index ) const;
+        size_t size() const;
 
 	protected:
 		typedef std::vector<pycpp::object_ptr> vector_element_t;

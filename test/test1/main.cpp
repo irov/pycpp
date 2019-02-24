@@ -78,7 +78,7 @@ public:
 #define PYCPP_CONSTANT_STRING(X) constant.string_##X
 #define PYCPP_CONSTANT_INTEGER(X) constant.integer_##X
 
-    void make_code( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
+    void make_code( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::module_ptr & _self )
     {
         _scope->make_function( _kernel, PYCPP_CONSTANT_STRING( test )
             , [this]( const pycpp::kernel_ptr & _kernel, pycpp::vector_attributes_t & _arguments, pycpp::string_ptr & _args, pycpp::string_ptr & _kwds )
@@ -91,15 +91,15 @@ public:
         } );
 
         _scope->make_klass( _kernel, PYCPP_CONSTANT_STRING( A )
-            , [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, pycpp::vector_base_t & _bases )
+            , [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::klass_ptr & _klass )
         {
-            _bases.emplace_back( _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( object ) ) );
-        }, [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope )
+            _klass->add_base( _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( object ) ) );
+        }, [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::klass_ptr & _klass )
         {
-            _scope->set_attr( _kernel, PYCPP_CONSTANT_STRING( MODULE ), _kernel->make_string( "test" ) );
-        }, [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope )
+            _klass->set_attr( _kernel, PYCPP_CONSTANT_STRING( MODULE ), _kernel->make_string( "test" ) );
+        }, [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::klass_ptr & _klass )
         {
-            _scope->make_function( _kernel, PYCPP_CONSTANT_STRING( __init__ )
+            _klass->make_function( _kernel, _scope, PYCPP_CONSTANT_STRING( __init__ )
                 , [this]( const pycpp::kernel_ptr & _kernel, pycpp::vector_attributes_t & _arguments, pycpp::string_ptr & _args, pycpp::string_ptr & _kwds )
             {
                 _arguments.emplace_back( PYCPP_CONSTANT_STRING( a ) );
@@ -119,7 +119,7 @@ public:
                 return _kernel->get_none();
             } );
 
-            _scope->make_function( _kernel, PYCPP_CONSTANT_STRING( foo )
+            _klass->make_function( _kernel, _scope, PYCPP_CONSTANT_STRING( foo )
                 , [this]( const pycpp::kernel_ptr & _kernel, pycpp::vector_attributes_t & _arguments, pycpp::string_ptr & _args, pycpp::string_ptr & _kwds )
             {
             }, [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
@@ -141,14 +141,14 @@ public:
             } );
         } );
 
-        _scope->set_attr( _kernel, PYCPP_CONSTANT_STRING( a ), _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( A ) )->call( _kernel, _scope, _self
+        _scope->set_attr( _kernel, PYCPP_CONSTANT_STRING( a ), _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( A ) )->call( _kernel, _scope
             , [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::scope_ptr & _self, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
         {
             _args->append( PYCPP_CONSTANT_INTEGER( 1 ) );
             _args->append( PYCPP_CONSTANT_INTEGER( 2 ) );
         } ) );
 
-        _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( a ) )->get_attr( _kernel, PYCPP_CONSTANT_STRING( foo ) )->call( _kernel, _scope, _self
+        _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( a ) )->get_attr( _kernel, PYCPP_CONSTANT_STRING( foo ) )->call( _kernel, _scope
             , [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::scope_ptr & _self, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
         {
         } );
@@ -162,13 +162,13 @@ void main()
 {
 	pycpp::kernel_ptr kernel = pycpp::create_kernel();
 
-    pycpp::function_ptr builtin_print = kernel->make_function( kernel->make_string( "print" )
+    kernel->make_builtin_function( kernel->make_string( "print" )
         , []( const pycpp::kernel_ptr & _kernel, pycpp::vector_attributes_t & _arguments, pycpp::string_ptr & _args, pycpp::string_ptr & _kwds )
     {
         _args = _kernel->make_string( "args" );
     }, []( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::object_ptr & _self )
     {
-        pycpp::list_ptr args = _scope->get_attr( _kernel, _kernel->make_string( "args" ) );
+        pycpp::tuple_ptr args = _scope->get_attr( _kernel, _kernel->make_string( "args" ) );
 
         size_t args_size = args->size();
 
@@ -186,13 +186,9 @@ void main()
         return _kernel->get_none();
     } );
 
-    kernel->set_builtin( kernel->make_string( "print" ), builtin_print );
+	pycpp::module_ptr module = kernel->make_module( kernel->make_string( "test" ) );
 
-	const pycpp::scope_ptr & global_scope = kernel->get_global_scope();
-
-	pycpp::scope_ptr module_scope = kernel->make_scope( global_scope );
-    
     module_test test;
     test.make_constant( kernel );
-    test.make_code( kernel, module_scope, module_scope );
+    test.make_code( kernel, module, module );
 }
