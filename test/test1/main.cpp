@@ -141,14 +141,14 @@ public:
             } );
         } );
 
-        _scope->set_attr( _kernel, PYCPP_CONSTANT_STRING( a ), _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( A ) )->call( _kernel, _scope
+        _scope->set_attr( _kernel, PYCPP_CONSTANT_STRING( a ), _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( A ) )->call( _kernel, _scope, _self
             , [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::scope_ptr & _self, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
         {
             _args->append( PYCPP_CONSTANT_INTEGER( 1 ) );
             _args->append( PYCPP_CONSTANT_INTEGER( 2 ) );
         } ) );
 
-        _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( a ) )->get_attr( _kernel, PYCPP_CONSTANT_STRING( foo ) )->call( _kernel, _scope
+        _scope->get_attr( _kernel, PYCPP_CONSTANT_STRING( a ) )->get_attr( _kernel, PYCPP_CONSTANT_STRING( foo ) )->call( _kernel, _scope, _self
             , [this]( const pycpp::kernel_ptr & _kernel, const pycpp::scope_ptr & _scope, const pycpp::scope_ptr & _self, const pycpp::list_ptr & _args, const pycpp::dict_ptr & _kwds )
         {
         } );
